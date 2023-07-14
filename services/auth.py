@@ -1,7 +1,8 @@
 import jwt
 from fastapi import HTTPException
 from passlib.context import CryptContext
-from datetime import datetime, timedelta
+from datetime import datetime
+from settings import access_token_lifetime, refresh_token_lifetime
 from models.user import User
 from settings import secret
 
@@ -25,7 +26,7 @@ class AuthService():
 
     def encode_token(self, username):
         payload = {
-            'exp': datetime.utcnow() + timedelta(days=0, minutes=20),
+            'exp': datetime.utcnow() + access_token_lifetime,
             'iat': datetime.utcnow(),
             'scope': 'access_token',
             'sub': username
@@ -68,7 +69,7 @@ class AuthService():
 
     def encode_refresh_token(self, username):
         payload = {
-            'exp': datetime.utcnow() + timedelta(days=14, hours=0),
+            'exp': datetime.utcnow() + refresh_token_lifetime,
             'iat': datetime.utcnow(),
             'scope': 'refresh_token',
             'sub': username

@@ -4,12 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from settings import title, host, port, origins
 import models
 from routers.auth import auth_route
+from routers.user import user_route
 
 
 app = FastAPI(title=title, docs_url="/api/docs",
               openapi_url="/api/openapi.json", version="1.0")
-
-app.include_router(auth_route, prefix='/api/auth')
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,12 +19,17 @@ app.add_middleware(
 )
 
 
+app.include_router(user_route, prefix="/api/user")
+app.include_router(auth_route, prefix="/api/auth")
+
+
 @app.get("/")
 async def root():
-    return "API сервер Chat"
+    return "API сервер Read Craft Academy"
 
 
 if __name__ == "__main__":
     models.database_create()
-    uvicorn.run('app:app', port=port,
+
+    uvicorn.run("app:app", port=port,
                 host=host, reload=True)

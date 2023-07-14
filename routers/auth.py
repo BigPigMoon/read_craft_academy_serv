@@ -63,7 +63,7 @@ async def signin(
 
 @auth_route.post('/refresh', tags=["Auth"], status_code=status.HTTP_200_OK)
 async def refresh_token(
-        credentials: HTTPAuthorizationCredentials = Security(security)
+    credentials: HTTPAuthorizationCredentials = Security(security)
 ) -> Tokens:
     refresh_token = credentials.credentials
 
@@ -89,7 +89,7 @@ async def refresh_token(
 
 @auth_route.post('/logout', tags=["Auth"], status_code=status.HTTP_200_OK)
 async def logout(
-        credentials: HTTPAuthorizationCredentials = Security(security)
+    credentials: HTTPAuthorizationCredentials = Security(security)
 ):
     token = credentials.credentials
 
